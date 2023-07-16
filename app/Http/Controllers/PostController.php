@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\DestroyItem;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -122,7 +123,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
-        $destroy = Post::findOrfail($id);
+        $destroy =  DestroyItem::destroy($id);
         $destroy->delete();
         return redirect()->route('posts.index');
     }
