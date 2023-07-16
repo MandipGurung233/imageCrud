@@ -132,9 +132,8 @@ class PostController extends Controller
         return view('trashed',compact('posts'));
     }
 
-    public function restore($id){
-
-        $post = Post::onlyTrashed()->findOrFail($id);
+    public function restore($id, ResourceController $restoreController){
+        $post = $restoreController->id($id);
         $post->restore();
         return redirect()->back();
     }
@@ -145,4 +144,5 @@ class PostController extends Controller
         $post->forceDelete();
         return redirect()->back();
     }
+
 }
