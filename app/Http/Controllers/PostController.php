@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Facades\DestroyItem;
 use App\Models\Category;
 use App\Models\Post;
+use App\Traits\image;
 use Illuminate\Http\Request;
 use File;
 
@@ -13,6 +14,9 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    use image;
+
     public function index()
     {
         //
@@ -35,6 +39,8 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+        
+
         $request->validate([
             'image'=>['required','max:2028','image'],
             'title'=>['required','max:255'],
@@ -46,8 +52,11 @@ class PostController extends Controller
             'title.required' => 'title khali na chod'        
         ]);
        
-        $fileName = time().'_'.$request->image->getClientOriginalName();
-        $filePath = $request->image->storeAs('/uploads', $fileName);
+        //$fileName = time().'_'.$request->image->getClientOriginalName();
+        //$filePath = $request->image->storeAs('/uploads', $fileName);
+
+        $image = $request->image;
+        $filePath = $this->image1($image);
 
         $post = new Post();
         $post->title = $request->title;
@@ -103,8 +112,11 @@ class PostController extends Controller
                 'image.required' => 'Please enter image',   
             ]);
 
-            $fileName = time().'_'.$request->image->getClientOriginalName();
-            $filePath = $request->image->storeAs('/uploads', $fileName);
+            //$fileName = time().'_'.$request->image->getClientOriginalName();
+            //$filePath = $request->image->storeAs('/uploads', $fileName);
+            
+            $image = $request->image;
+            $filePath = $this->image1($image);
             File::delete(public_path($post->image));
             $post->image = 'storage/'.$filePath;
         }
