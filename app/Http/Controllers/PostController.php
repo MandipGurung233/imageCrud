@@ -17,6 +17,12 @@ class PostController extends Controller
 
     use image;
 
+    public function __construct()
+    {
+        //$this->middleware('authCheck')->only(['create', 'show']);
+        $this->middleware('authCheck')->except(['create', 'show', 'index']);
+    }
+
     public function index()
     {
         //
