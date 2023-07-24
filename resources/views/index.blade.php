@@ -17,40 +17,29 @@
         </div>
         <div class="card-body">
             <table class="table table-striped table-bordered border-dark">
-                <thead style="background: wheat">
-                  <tr>
-                    <th scope="col">S.N</th>
-                    <th scope="col" style="width: 10%">Image</th>
-                    <th scope="col" style="width: 10%">Title</th>
-                    <th scope="col" style="width: 30%">Description</th>
-                    <th scope="col" style="width: 10%">Category</th>
-                    <th scope="col" style="width: 10%">Publish Date</th>
-                    <th scope="col" style="width: 20%">Action</th>
-                  </tr>
-                </thead>
+                <x-heading/>
                 <tbody>
                     @foreach ($posts as $post)
-                        <tr>
-                            <th scope="row">{{$post->id}}</th>
-                            <td>
-                                <img src="{{asset($post->image)}}" alt="" width="80">
-                            </td>
-                            <td>{{$post->title}}</td>
-                            <td>{{$post->description}}</td>
-                            <td>{{$post->category->name}}</td>
-                            <td>{{date('d-m-y', strtotime($post->created_at))}}</td>
-                            <td>
-                                <a class="btn btn-success" href="{{route('posts.show', $post->id)}}">Show</a>
-                                <a class="btn btn-primary" href="{{route('posts.edit', $post->id)}}">Edit</a>
-                                <form action="{{route('posts.destroy',$post->id)}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn-sm btn-danger btn">
-                                        Delete
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                        <x-index.data>
+                            <x-slot name="id">
+                                {{$post->id}}
+                            </x-slot>
+                            <x-slot name="image">
+                                {{$post->image}}
+                            </x-slot>
+                            <x-slot name="title">
+                                {{$post->title}}
+                            </x-slot>
+                            <x-slot name="description">
+                                {{$post->description}}
+                            </x-slot>
+                            <x-slot name="category">
+                                {{$post->category->name}}
+                            </x-slot>
+                            <x-slot name="creation">
+                                {{$post->created_at}}
+                            </x-slot>
+                        </x-index.data>
                     @endforeach              
                 </tbody>  
             </table>

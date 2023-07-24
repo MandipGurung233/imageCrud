@@ -20,7 +20,7 @@ class PostController extends Controller
     public function __construct()
     {
         //$this->middleware('authCheck')->only(['create', 'show']);
-        $this->middleware('authCheck')->except(['create', 'show', 'index']);
+        $this->middleware('authCheck')->except(['create', 'store', 'show', 'edit', 'update', 'index', 'destroy', 'trashed', 'forceDelete', 'restore']);
     }
 
     public function index()
